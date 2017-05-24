@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxjy.elog.dao.IAppInfoDao">
+	
+	<!-- 根据编号查询APP信息信息 -->
+	<select id="findAppInfoById" parameterType="int" resultType="appInfoBo">
+		select * from `app_info` where ID = #{_parameter}
+	</select>
+
+	<!-- 分页查询APP信息列表 -->
+	<select id="findListByPage" resultType="appInfoBo">
+		select * from `app_info` 
+		<where>
+		<if test="null != param.appId and '' != param.appId">
+			`appId` = #{param.appId}
+		</if>
+		</where>
+		order by ID desc
+	</select>
+	
+	<!-- 添加APP信息 -->
+	<insert id="doAddAppInfo" parameterType="appInfoBo">
+		insert into `app_info` (
+			`APP_ID`, 
+			`APP_KEY`, 
+			`APP_NAME`, 
+			`CREATE_USER`, 
+			`CREATE_TIME`, 
+			`STATUS`
+		) values 
+		(
+			#{appId}, 
+			#{appKey}, 
+			#{appName}, 
+			#{createUser}, 
+			CURRENT_TIMESTAMP(), 
+			#{status}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `app_info` limit 1
+		</selectKey>
+	</insert>
+		
+	<!-- 编辑APP信息 -->
+	<update id="doEditAppInfo" parameterType="appInfoBo">
+		update `app_info` 
+		<set> 
+			<if test="null != appId and '' != appId">
+				`APP_ID` = #{appId},
+			</if>
+			<if test="null != appKey and '' != appKey">
+				`APP_KEY` = #{appKey},
+			</if>
+			<if test="null != appName and '' != appName">
+				`APP_NAME` = #{appName},
+			</if>
+			<if test="null != createUser and '' != createUser">
+				`CREATE_USER` = #{createUser},
+			</if>
+			<if test="null != status and '' != status">
+				`STATUS` = #{status},
+			</if>
+		</set>
+        where ID = #{id}
+	</update>
+	
+	<!-- 根据编号删除APP信息 -->
+	<delete id="doDelAppInfo" parameterType="int">
+		delete from `app_info` where ID = #{_parameter}
+	</delete>
+
+</mapper>

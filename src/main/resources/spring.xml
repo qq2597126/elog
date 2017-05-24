@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd  
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd" >
+	
+	<!-- <context:property-placeholder location="classpath*:/db.properties"/>  -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:db.properties</value>
+				<value>classpath*:init.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+	
+	<bean id="property" class="com.pxjy.common.constant.Property">
+		<property name="BASE" value="${system.base}"/>
+		<property name="CHARSET" value="${system.charset}"/>
+		<property name="COMP_NAME" value="${company.name}"/>
+		<property name="SYSTEM_NAME" value="${system.name}"/>
+		<!-- 图片上传预览相关配置 begin -->
+		<property name="FILE_UPLOAD_ROOTPATH" value="${file.upload.rootpath}"/>
+		<property name="FILE_UPLOAD_ROOTURL" value="${file.upload.rooturl}"/>
+		<property name="FILE_IMAG_UPLOADPATH" value="${file.imag.uploadpath}"/>
+		<property name="FILE_IMAG_MAXSIZE" value="${file.imag.maxsize}"/>
+		<property name="FILE_IMAG_TYPES" value="${file.imag.types}"/>
+		<property name="DEFAULT_MANAGER_LOGO" value="${default.manager.logo}"/>
+		<property name="DEFAULT_SYSTEM_ICON" value="${default.system.icon}"/>
+		<!-- 图片上传预览相关配置end -->
+	</bean>
+	
+	<import resource="spring-db.xml"/>
+	<import resource="spring-mybatis.xml"/>
+	
+	<import resource="spring-service.xml"/>
+	
+</beans> 
