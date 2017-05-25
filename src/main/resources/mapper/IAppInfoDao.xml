@@ -12,7 +12,7 @@
 		select * from `app_info` 
 		<where>
 		<if test="null != param.appId and '' != param.appId">
-			`appId` = #{param.appId}
+			`app_id` = #{param.appId}
 		</if>
 		</where>
 		order by ID desc
@@ -24,6 +24,8 @@
 			`APP_ID`, 
 			`APP_KEY`, 
 			`APP_NAME`, 
+			`SENT_TIME`, 
+			`SEND_TYPE`, 
 			`CREATE_USER`, 
 			`CREATE_TIME`, 
 			`STATUS`
@@ -32,6 +34,8 @@
 			#{appId}, 
 			#{appKey}, 
 			#{appName}, 
+			#{sendTime}
+			#{sendType}, 
 			#{createUser}, 
 			CURRENT_TIMESTAMP(), 
 			#{status}
@@ -54,10 +58,13 @@
 			<if test="null != appName and '' != appName">
 				`APP_NAME` = #{appName},
 			</if>
+			<if test="null != sendType and '' != sendType">
+				`SEND_TYPE` = #{sendType},
+			</if>
 			<if test="null != createUser and '' != createUser">
 				`CREATE_USER` = #{createUser},
 			</if>
-			<if test="null != status and '' != status">
+			<if test="null != status and '-1' != status">
 				`STATUS` = #{status},
 			</if>
 		</set>

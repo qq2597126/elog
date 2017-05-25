@@ -17,6 +17,7 @@
 			<list>
 				<value>classpath*:db.properties</value>
 				<value>classpath*:init.properties</value>
+				<value>classpath*:mongo.properties</value>
 			</list>
 		</property>
 		<property name="fileEncoding" value="UTF-8" />
@@ -38,9 +39,12 @@
 		<!-- 图片上传预览相关配置end -->
 	</bean>
 	
+	<!-- mongo的配置 -->
+	<import resource="mongo.xml"/>
+	<import resource="mongoDaoContext.xml"/>
+	
 	<import resource="spring-db.xml"/>
 	<import resource="spring-mybatis.xml"/>
 	
 	<import resource="spring-service.xml"/>
-	
 </beans> 

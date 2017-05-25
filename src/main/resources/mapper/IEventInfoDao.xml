@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxjy.elog.dao.IEventInfoDao">
+	
+	<!-- 根据编号查询事件信息信息 -->
+	<select id="findEventInfoById" parameterType="int" resultType="eventInfoBo">
+		select * from `event_info` where ID = #{_parameter}
+	</select>
+
+	<!-- 分页查询事件信息列表 -->
+	<select id="findListByPage" resultType="eventInfoBo">
+		select * from `event_info` 
+		<where>
+		<if test="null != param.appId and '' != param.appId">
+			`APP_ID` = #{param.appId}
+		</if>
+		</where>
+		order by ID desc
+	</select>
+	
+	<!-- 添加事件信息 -->
+	<insert id="doAddEventInfo" parameterType="eventInfoBo">
+		insert into `event_info` (
+			`APP_ID`, 
+			`EVENT_KEY`, 
+			`EVENT_NAME`, 
+			`CREATE_TIME`
+		) values 
+		(
+			#{appId}, 
+			#{eventKey}, 
+			#{eventName}, 
+			CURRENT_TIMESTAMP()
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `event_info` limit 1
+		</selectKey>
+	</insert>
+		
+	<!-- 编辑事件信息 -->
+	<update id="doEditEventInfo" parameterType="eventInfoBo">
+		update `event_info` 
+		<set> 
+			<if test="null != appId and '' != appId">
+				`APP_ID` = #{appId},
+			</if>
+			<if test="null != eventKey and '' != eventKey">
+				`EVENT_KEY` = #{eventKey},
+			</if>
+			<if test="null != eventName and '' != eventName">
+				`EVENT_NAME` = #{eventName},
+			</if>
+		</set>
+        where ID = #{id}
+	</update>
+	
+	<!-- 根据编号删除事件信息 -->
+	<delete id="doDelEventInfo" parameterType="int">
+		delete from `event_info` where ID = #{_parameter}
+	</delete>
+
+</mapper>

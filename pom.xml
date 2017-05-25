@@ -216,6 +216,12 @@
 			<artifactId>jstl</artifactId>
 			<version>${jstl.version}</version>
 		</dependency>
+		<!-- mongodb -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.9.6.RELEASE</version>
+		</dependency>
 		<!-- freemarker -->
 		<dependency>
 			<groupId>freemarker</groupId>

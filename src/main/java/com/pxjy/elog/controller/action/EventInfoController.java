@@ -13,43 +13,43 @@ import com.alibaba.fastjson.JSONObject;
 import com.pxjy.common.controller.BaseController;
 import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
-import com.pxjy.elog.domain.bo.AppInfoBo;
-import com.pxjy.elog.domain.param.AppInfoParam;
-import com.pxjy.elog.service.IAppInfoService;
+import com.pxjy.elog.domain.bo.EventInfoBo;
+import com.pxjy.elog.domain.param.EventInfoParam;
+import com.pxjy.elog.service.IEventInfoService;
 
 /**
- * APP信息控制器
+ * 事件信息控制器
  * @author cg
- * @date 2017-05-24
+ * @date 2017-05-25
  */
 @Controller
-@RequestMapping("/admin/appInfo")
-public class AppInfoController extends BaseController {
+@RequestMapping("/admin/eventInfo")
+public class EventInfoController extends BaseController {
 	
 	@Autowired
-	private IAppInfoService appInfoService;
+	private IEventInfoService eventInfoService;
 
 	/**
-	 * 进入APP信息列表
+	 * 进入事件信息列表
 	 * @return String
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	 @RequestMapping(value="/onList", method=RequestMethod.GET)
-	 public String onAppInfoList() {
-		return "appInfo/list";
+	 public String onEventInfoList() {
+		return "eventInfo/list";
 	}
 
 	/**
-	 * 查询APP信息列表
+	 * 查询事件信息列表
 	 * @param request
 	 * @param response void
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	@RequestMapping(value="/list4ajax")
-	public void findAppInfoList4Ajax(HttpServletRequest request, HttpServletResponse response) {
-		AppInfoParam param = new AppInfoParam();
+	public void findEventInfoList4Ajax(HttpServletRequest request, HttpServletResponse response) {
+		EventInfoParam param = new EventInfoParam();
 		String pageNumber 	= null;
 		String pageSize 	= null;
 		
@@ -75,45 +75,44 @@ public class AppInfoController extends BaseController {
 		param.setPageNumber(StringUtil.isNotEmpty(pageNumber) ? Integer.valueOf(pageNumber) : 1);
 		param.setPageSize(StringUtil.isNotEmpty(pageSize) ? Integer.valueOf(pageSize) : 15);
 		
-		IPage<AppInfoBo> pageList = appInfoService.findListByPage(param);
+		IPage<EventInfoBo> pageList = eventInfoService.findListByPage(param);
 				
 		writeResponse4Ajax(pageList, response);
 	}
 
 	/**
-	 * 进入添加APP信息页面
+	 * 进入添加事件信息页面
 	 * @return String
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	@RequestMapping(value="/onAdd", method=RequestMethod.GET)
-	public String onAddAppInfo() {
-		return "appInfo/add";
+	public String onAddEventInfo() {
+		return "eventInfo/add";
 	}
 	
 	/**
-	 * 保存APP信息信息
+	 * 保存事件信息信息
 	 * @param schoolBo
 	 * @return String
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public String doAddAppInfo(AppInfoBo appInfoBo) {
-		//设置创建人的信息
-		appInfoService.doAddAppInfo(appInfoBo);
-		return "redirect:/admin/appInfo/onList";
+	public String doAddEventInfo(EventInfoBo eventInfoBo) {
+		eventInfoService.doAddEventInfo(eventInfoBo);
+		return "redirect:/admin/eventInfo/onList";
 	}
 
 	/**
-	 * 进入APP信息编辑页面
+	 * 进入事件信息编辑页面
 	 * @param request
 	 * @return String
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	@RequestMapping(value="/onEdit")
-	public String onEditAppInfo(HttpServletRequest request) {
+	public String onEditEventInfo(HttpServletRequest request) {
 		String idStr = request.getParameter("id");
 		String nowPage = request.getParameter("nowPage");
 		String pageSize = request.getParameter("pageSize");
@@ -123,42 +122,42 @@ public class AppInfoController extends BaseController {
 
 		int id = StringUtil.toInt(idStr);
 		
-		AppInfoBo appInfoBo = appInfoService.findAppInfoById(id);
-		request.setAttribute("appInfo", appInfoBo);
+		EventInfoBo eventInfoBo = eventInfoService.findEventInfoById(id);
+		request.setAttribute("eventInfo", eventInfoBo);
 		
-		return "appInfo/edit";
+		return "eventInfo/edit";
 	}
 	
 	/**
-	 * 编辑APP信息信息
-	 * @param appInfoBo
+	 * 编辑事件信息信息
+	 * @param eventInfoBo
 	 * @param request
 	 * @return String
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String doEditAppInfo(AppInfoBo appInfoBo, HttpServletRequest request) {
+	public String doEditEventInfo(EventInfoBo eventInfoBo, HttpServletRequest request) {
 		String nowPage = request.getParameter("nowPage");
 		String pageSize = request.getParameter("pageSize");
 		// 传递参数
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("pageSize", pageSize);
 		
-		appInfoService.doEditAppInfo(appInfoBo);
+		eventInfoService.doEditEventInfo(eventInfoBo);
 		
-		return "appInfo/list";
+		return "eventInfo/list";
 	}
 	
 	/**
-	 * 删除APP信息信息
+	 * 删除事件信息信息
 	 * @param request
 	 * @return String
 	 * @author: cg
-	 * @time: 2017-05-24
+	 * @time: 2017-05-25
 	 */
 	@RequestMapping(value="/doDel", method=RequestMethod.POST)
-	public String doDelAppInfo(HttpServletRequest request) {
+	public String doDelEventInfo(HttpServletRequest request) {
 		String idStr = request.getParameter("id");
 		String nowPage = request.getParameter("nowPage");
 		String pageSize = request.getParameter("pageSize");
@@ -171,9 +170,9 @@ public class AppInfoController extends BaseController {
 		
 		int id = StringUtil.toInt(idStr);
 		
-		appInfoService.doDelAppInfo(id);
+		eventInfoService.doDelEventInfo(id);
 		
-		return "appInfo/list";
+		return "eventInfo/list";
 	}
 
 }

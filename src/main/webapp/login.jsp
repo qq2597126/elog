@@ -36,7 +36,7 @@
             </div>
             <!--表单部分-->
             <div class="form-group">
-            	<form id="loginform" action="${base }/login" method="post">
+            	<form id="loginform" action="${base }/login/login" method="post">
 	                <div class="username">
 	                    <input type="text" name="loginName" id="loginName" placeholder="用户名/邮箱" value="admin@pxjy.com">
 	                    <span class="errInfo userErr"></span>

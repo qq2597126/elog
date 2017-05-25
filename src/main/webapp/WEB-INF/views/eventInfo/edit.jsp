@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>${systemName}-APP信息</title>
+    <title>${systemName}-事件信息</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <%@ include file="/jsp/common/meta.jsp"%>
     <script language="javascript">
@@ -11,7 +11,7 @@
             return true;
         }
         function cancleClick(){
-            self.location = baseUrl + '/admin/appInfo/onList';    
+            self.location = baseUrl + '/admin/eventInfo/onList';    
         }
     </script>
     <style type="text/css">
@@ -28,35 +28,29 @@
         <!-- begin panel -->
         <div class="panel panel-inverse">
              <div class="panel-heading">
-                 <h4 class="panel-title">APP信息修改</h4>
+                 <h4 class="panel-title">事件信息修改</h4>
              </div>
              <div class="panel-body panel-form">
-                  <form data-parsley-validate="true" name="schoolForm" id="schoolForm" method="post" action="${base}/admin/appInfo/edit" onsubmit="return checkForm();" class="form-horizontal form-bordered" data-validate="parsley">
-                    <input type="hidden" id="id" name="id" value="${requestScope.appInfo.id }"/>
+                  <form data-parsley-validate="true" name="schoolForm" id="schoolForm" method="post" action="${base}/admin/eventInfo/edit" onsubmit="return checkForm();" class="form-horizontal form-bordered" data-validate="parsley">
+                    <input type="hidden" id="id" name="id" value="${requestScope.eventInfo.id }"/>
                     <input type="hidden" name="nowPage" id="commonNowPage" value="${requestScope.nowPage}"/>
                     <input type="hidden" name="pageSize" id="commonPageSize" value="${requestScope.pageSize}"/>
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.appId">APP标示：</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="eventInfo.appId">APP标识：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="appId" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.appId }" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
+                            <input name="appId" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.appId }" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.appName">APP显示名称：</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="eventInfo.eventKey">EVENT_KEY：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="appName" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.appName }" type="text" id="appName" ltype="text" class="form-control parsley-validated"/>
+                            <input name="eventKey" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.eventKey }" type="text" id="eventKey" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.sendType">发送类型:</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="eventInfo.eventName">事件名称：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="sendType" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.sendType }" type="text" id="sendType" ltype="text" class="form-control parsley-validated"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.status">状态(1有效，0无效)：</label>
-                        <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="status" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.status }" type="text" id="status" ltype="text" class="form-control parsley-validated"/>
+                            <input name="eventName" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.eventName }" type="text" id="eventName" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">

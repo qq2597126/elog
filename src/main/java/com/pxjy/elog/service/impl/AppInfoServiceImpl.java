@@ -34,13 +34,13 @@ public class AppInfoServiceImpl implements IAppInfoService {
 
 	@Override
 	public void doAddAppInfo(AppInfoBo appInfoBo) {
-		// TODO Auto-generated method stub
+		//初始化数据
+		
 		appInfoDao.doAddAppInfo(appInfoBo);
 	}
 
 	@Override
 	public void doEditAppInfo(AppInfoBo appInfoBo) {
-		// TODO Auto-generated method stub
 		appInfoDao.doEditAppInfo(appInfoBo);
 	}
 
