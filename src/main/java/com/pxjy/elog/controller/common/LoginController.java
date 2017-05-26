@@ -9,6 +9,6 @@ import com.pxjy.common.controller.BaseController;
 public class LoginController extends BaseController{
 	@RequestMapping("login")
 	public String login(){
-		return "/appInfo/list";
+		return "main";
 	}
 }

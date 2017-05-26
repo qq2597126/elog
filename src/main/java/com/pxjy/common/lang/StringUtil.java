@@ -6,6 +6,7 @@ import java.io.StringWriter;
 public class StringUtil {
 	
 	private final static String SPLIT_SIGN = "~@&!<./-%#";
+	private final static String BASE_RANDOM_STR="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	public static void checkString(String name, String value) {
 		if (value == null) {
@@ -90,5 +91,22 @@ public class StringUtil {
 	
 	public static String[] split(String s) {
 		return s.split(SPLIT_SIGN);
+	}
+	/**
+	 * 生成对应的位数的字符串包含[0-9 a-z A-Z]的数据
+	 */
+	public static String randomStr(int bit){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<bit;i++){
+			int randomInt = (int) (Math.random()*BASE_RANDOM_STR.length());
+			sb.append(BASE_RANDOM_STR.charAt(randomInt));
+		}
+		return sb.toString();
+	}
+	/**
+	 *生成32的字符串 
+	 */
+	public static String random32Str(){
+		return randomStr(32);
 	}
 }

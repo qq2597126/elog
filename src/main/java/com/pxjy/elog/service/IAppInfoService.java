@@ -53,4 +53,8 @@ public interface IAppInfoService {
 	 */
 	public void doDelAppInfo(Integer id);
 
+	/**
+	 * 根据ID进行查询
+	 */
+	public AppInfoBo findAppinfoByAppId(AppInfoBo appInfoBo);
 }

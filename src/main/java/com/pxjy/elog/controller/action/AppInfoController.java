@@ -1,19 +1,28 @@
 package com.pxjy.elog.controller.action;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pxjy.common.controller.BaseController;
 import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
 import com.pxjy.elog.domain.bo.AppInfoBo;
+import com.pxjy.elog.domain.bo.EventLogBo;
 import com.pxjy.elog.domain.param.AppInfoParam;
 import com.pxjy.elog.service.IAppInfoService;
 
@@ -25,7 +34,8 @@ import com.pxjy.elog.service.IAppInfoService;
 @Controller
 @RequestMapping("/admin/appInfo")
 public class AppInfoController extends BaseController {
-	
+	private static String RETURN_SUCCESS_STATUS="1";
+	private static String RETURN_DEFAULT_STATUS="0";
 	@Autowired
 	private IAppInfoService appInfoService;
 
@@ -79,7 +89,29 @@ public class AppInfoController extends BaseController {
 				
 		writeResponse4Ajax(pageList, response);
 	}
-
+	/**
+	 * 根据APPID进行查询
+	 */
+	@RequestMapping("/getAppinfoByAppId")
+	@ResponseBody
+	public Map<String,Object> getAppInfoByAppId(String appId){
+		String status=RETURN_DEFAULT_STATUS;
+		String errorMessage="";
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		if(StringUtils.isBlank(appId)){
+			errorMessage="缺少参数appId";
+		}else{
+			//数据解析
+			AppInfoBo appInfoBo = new AppInfoBo();
+			appInfoBo.setAppId(appId);
+			AppInfoBo appinfo = appInfoService.findAppinfoByAppId(appInfoBo);
+			resultMap.put("data",appinfo);
+			status=RETURN_SUCCESS_STATUS;
+		}
+		resultMap.put("errorMessage",errorMessage);
+		resultMap.put("status",status);
+		return resultMap;
+	}
 	/**
 	 * 进入添加APP信息页面
 	 * @return String
@@ -101,6 +133,13 @@ public class AppInfoController extends BaseController {
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String doAddAppInfo(AppInfoBo appInfoBo) {
 		//设置创建人的信息
+		appInfoBo.setCreateUser(8175);
+		if(appInfoBo.getSendType().equals(0)){
+			appInfoBo.setSendTime(0L);
+		}
+		if(appInfoBo.getSendTime()<0){
+			appInfoBo.setSendTime(0L);
+		}
 		appInfoService.doAddAppInfo(appInfoBo);
 		return "redirect:/admin/appInfo/onList";
 	}
@@ -144,7 +183,12 @@ public class AppInfoController extends BaseController {
 		// 传递参数
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("pageSize", pageSize);
-		
+		if(appInfoBo.getSendType().equals(0)){
+			appInfoBo.setSendTime(0L);
+		}
+		if(appInfoBo.getSendTime()<0){
+			appInfoBo.setSendTime(0L);
+		}
 		appInfoService.doEditAppInfo(appInfoBo);
 		
 		return "appInfo/list";

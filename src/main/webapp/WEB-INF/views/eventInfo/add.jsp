@@ -32,13 +32,7 @@
              <div class="panel-body panel-form">
                   <form data-parsley-validate="true" name="schoolForm" id="schoolForm" method="post" action="${base}/admin/eventInfo/add" onsubmit="return checkForm();" class="form-horizontal form-bordered" data-validate="parsley">
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP标识：</label>
-                        <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="appId" maxlength="64" data-parsley-required="true" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>EVENT_KEY：</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>事件标识：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
                             <input name="eventKey" maxlength="64" data-parsley-required="true" type="text" id="eventKey" ltype="text" class="form-control parsley-validated"/>
                         </div>
@@ -47,6 +41,12 @@
                         <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>事件名称：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
                             <input name="eventName" maxlength="64" data-parsley-required="true" type="text" id="eventName" ltype="text" class="form-control parsley-validated"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP标识：</label>
+                        <div class="col-md-6 col-sm-6 ui-sortable">
+                            <input name="appId" maxlength="64" data-parsley-required="true" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">

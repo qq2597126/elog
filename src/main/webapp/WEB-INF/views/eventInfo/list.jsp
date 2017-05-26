@@ -113,7 +113,7 @@
                         }
                     }
                     ,{ id: 'appId', title: 'APP标识', type: 'string', columnClass: 'text-center' }
-                    ,{ id: 'eventKey', title: 'EVENT_KEY', type: 'string', columnClass: 'text-center' }
+                    ,{ id: 'eventKey', title: '事件标识', type: 'string', columnClass: 'text-center' }
                     ,{ id: 'eventName', title: '事件名称', type: 'string', columnClass: 'text-center' }
                     ,{ id: 'createTime', title: '创建时间', type: 'date', format:'yyyy-MM-dd hh:mm:ss', otype:'time_stamp_ms', columnClass: 'text-center' }
                 ];

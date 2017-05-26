@@ -13,6 +13,66 @@
         function cancleClick(){
             self.location = baseUrl + '/admin/appInfo/onList';    
         }
+        
+        $(function(){
+        	//设置默认值
+            var sendType ={
+         			init:function(){
+         				var val = ${requestScope.appInfo.sendType };
+         				$("#sendType").val(val);
+                     	if(val=="1"){
+                 			$("#sendTimeDiv").show();
+                 			$("#sendTime").attr("data-parsley-required","true"); 
+                 		}else{
+                 			$("#sendTimeDiv").hide();
+                 			$("#sendTime").attr("data-parsley-required","false");      			
+                 		}
+         			}
+         	}
+            sendType.init();
+        	
+        	
+        	
+        	
+        	// =========================事件======================
+        	//定时发送
+        	$("#sendType").on("change",function(){
+        		var val = $("#sendType").val();
+        		if(val=="1"){
+        			$("#sendTimeDiv").show();
+        			$("#sendTime").attr("data-parsley-required","true"); 
+        		}else{
+        			$("#sendTimeDiv").hide();
+        			$("#sendTime").attr("data-parsley-required","false");      			
+        		}
+        	});
+        	var rAppId=$("#appId").val();
+        	//自定义校验(APPID是否重复)
+	    	Parsley.addValidator('appidverify', {
+  					validateString: function(value, country) {
+	  					var isTrue = true;	
+	  					var appId = $("#appId").val();
+  						if(rAppId!=appId){
+  							$.ajax({
+	  		    				 type: "post",
+	  		    				 url: baseUrl+"/admin/appInfo/getAppinfoByAppId",
+	  		    				 dataType: "json",
+	  		    				 async:false,
+	  		    				 data:"appId="+appId,
+	  		    				 success:function(msg){
+	  		    					 if(msg.data!=null||msg.data!=undefined){
+	  		    						isTrue = false;
+	  		    					 }
+	  		    				 }
+	  		    			});
+  						}
+    					return isTrue;
+  					},
+  				messages: {en: 'There is no such zip for the country'}
+			});
+        	
+        	//========================事件结束======================
+        })
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -38,7 +98,10 @@
                     <div class="form-group">
                         <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.appId">APP标示：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="appId" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.appId }" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
+                            <input name="appId" maxlength="64" data-parsley-required="true"
+                            	data-parsley-appidverify="us"
+                            	data-parsley-appidverify-message="AppID已经存在"
+                             	value="${requestScope.appInfo.appId }" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -47,18 +110,22 @@
                             <input name="appName" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.appName }" type="text" id="appName" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.sendType">发送类型:</label>
+                     <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>发送类型:</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="sendType" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.sendType }" type="text" id="sendType" ltype="text" class="form-control parsley-validated"/>
+ 								<select id="sendType" name="sendType" class="form-control parsley-validated">
+ 									<option value="0" >启动时发送</option>
+ 									<option value="1">间隔发送</option>
+ 								</select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="appInfo.status">状态(1有效，0无效)：</label>
+                    <div class="form-group" id="sendTimeDiv"  style="display:none;">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>时间间隔:</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="status" maxlength="64" data-parsley-required="true" value="${requestScope.appInfo.status }" type="text" id="status" ltype="text" class="form-control parsley-validated"/>
+                            <input name="sendTime" maxlength="64" value="${requestScope.appInfo.status }" data-parsley-required="false" data-parsley-type="number" type="text" id="sendTime" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label class="control-label col-md-4 col-sm-4 ui-sortable"></label>
                         <div class="col-md-6 col-sm-6 ui-sortable">

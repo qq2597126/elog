@@ -56,5 +56,9 @@ public interface IAppInfoDao {
 	 * @time: 2017-05-24
 	 */
 	public void doDelAppInfo(Integer id);
+	/**
+	 * 根据APPID进行查询
+	 */
+	public AppInfoBo findAppInfoByAppId(AppInfoBo appInfoBo);
 	
 }

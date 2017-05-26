@@ -31,7 +31,7 @@ public class AppInfoBo extends BaseModel{
 	/**
 	 * 发送间隔
 	 */
-	private Long sentTime;
+	private Long sendTime;
 	
 	/**
 	 * 发送类型：0启动时发送，1按照SEND_TIME设置的时间间隔发送
@@ -80,12 +80,14 @@ public class AppInfoBo extends BaseModel{
 
 	
 
-	public Long getSentTime() {
-		return sentTime;
+	
+
+	public Long getSendTime() {
+		return sendTime;
 	}
 
-	public void setSentTime(Long sentTime) {
-		this.sentTime = sentTime;
+	public void setSendTime(Long sendTime) {
+		this.sendTime = sendTime;
 	}
 
 	public Integer getSendType() {
@@ -119,4 +121,5 @@ public class AppInfoBo extends BaseModel{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
 }

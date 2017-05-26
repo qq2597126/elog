@@ -117,7 +117,7 @@
                     ,{ id: 'appId', title: 'APP标示', type: 'string', columnClass: 'text-center' }
                     ,{ id: 'appName', title: 'APP显示名称', type: 'string', columnClass: 'text-center' }
                     ,{ id: 'appKey', title: 'APP验签加密字符串', type: 'string', columnClass: 'text-center' }
-                    ,{ id: 'sentTime', title: '发送间隔', type: 'long', columnClass: 'text-center',
+                    ,{ id: 'sendTime', title: '间隔发送', type: 'string', columnClass: 'text-center',
                     	resolution: function (value, record, column, grid, dataNo, columnNo) {
                             if(record.sendType=='0'){
                             	return "-";

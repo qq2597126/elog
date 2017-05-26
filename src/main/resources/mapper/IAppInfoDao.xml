@@ -15,16 +15,21 @@
 			`app_id` = #{param.appId}
 		</if>
 		</where>
-		order by ID desc
+		order by status desc,CREATE_TIME desc
 	</select>
-	
+	<!-- 根据APPID进行获取 -->
+	<select id="findAppInfoByAppId" parameterType="appInfoBo" resultType="appInfoBo">
+		select * from 	`app_info`
+		where 	`app_id` = #{appId}
+		limit 1
+	</select>
 	<!-- 添加APP信息 -->
 	<insert id="doAddAppInfo" parameterType="appInfoBo">
 		insert into `app_info` (
 			`APP_ID`, 
 			`APP_KEY`, 
 			`APP_NAME`, 
-			`SENT_TIME`, 
+			`SEND_TIME`, 
 			`SEND_TYPE`, 
 			`CREATE_USER`, 
 			`CREATE_TIME`, 
@@ -34,7 +39,7 @@
 			#{appId}, 
 			#{appKey}, 
 			#{appName}, 
-			#{sendTime}
+			#{sendTime},
 			#{sendType}, 
 			#{createUser}, 
 			CURRENT_TIMESTAMP(), 
@@ -58,13 +63,16 @@
 			<if test="null != appName and '' != appName">
 				`APP_NAME` = #{appName},
 			</if>
-			<if test="null != sendType and '' != sendType">
+			<if test="null != sendType ">
 				`SEND_TYPE` = #{sendType},
 			</if>
-			<if test="null != createUser and '' != createUser">
+			<if test="null != sendTime ">
+				`SEND_TIME` = #{sendTime},
+			</if>
+			<if test="null != createUser ">
 				`CREATE_USER` = #{createUser},
 			</if>
-			<if test="null != status and '-1' != status">
+			<if test="null != status ">
 				`STATUS` = #{status},
 			</if>
 		</set>

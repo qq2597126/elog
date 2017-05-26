@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.mongodb.util.Hash;
 import com.pxjy.elog.domain.bo.EventLogBo;
 import com.pxjy.elog.service.IEventLogService;
 

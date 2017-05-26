@@ -2,6 +2,7 @@ package com.pxjy.elog.service.impl;
 
 import javax.annotation.Resource;
 
+import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
 import com.pxjy.common.paginator.PageRequest;
 import com.pxjy.elog.dao.IAppInfoDao;
@@ -35,7 +36,9 @@ public class AppInfoServiceImpl implements IAppInfoService {
 	@Override
 	public void doAddAppInfo(AppInfoBo appInfoBo) {
 		//初始化数据
-		
+		//设置APPID
+		appInfoBo.setAppKey(StringUtil.random32Str());
+		appInfoBo.setStatus(1);
 		appInfoDao.doAddAppInfo(appInfoBo);
 	}
 
@@ -48,6 +51,11 @@ public class AppInfoServiceImpl implements IAppInfoService {
 	public void doDelAppInfo(Integer id) {
 		// TODO Auto-generated method stub
 		appInfoDao.doDelAppInfo(id);
+	}
+
+	@Override
+	public AppInfoBo findAppinfoByAppId(AppInfoBo appInfoBo) {
+		return appInfoDao.findAppInfoByAppId(appInfoBo);
 	}
 
 }

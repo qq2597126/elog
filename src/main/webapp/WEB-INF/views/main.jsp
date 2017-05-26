@@ -47,9 +47,9 @@
 							<span class="hidden-xs">${sessionScope.role.name }：${sessionScope.manager.name }</span> 
 							<!-- <b class="caret"></b> -->
 						</a>
-						<%-- <ul class="dropdown-menu animated fadeInLeft">
+						<ul class="dropdown-menu animated fadeInLeft">
 							<li><a href="${base }/logOff.${actionExt}">退出</a></li>
-						</ul> --%>
+						</ul> 
 					</li>
 				</ul>
 				<!-- end header navigation right -->
@@ -63,7 +63,7 @@
 			<!-- begin sidebar scrollbar -->
 			<div data-scrollbar="true" data-height="100%">
 				<!-- begin sidebar user -->
-				<ul class="nav">
+				<%-- <ul class="nav">
 					<li class="nav-profile">
 						<div class="image">
 							<a href="javascript:;"><img src="${sessionScope.manager.logoUrl}" alt=""></a>
@@ -72,80 +72,26 @@
 							${sessionScope.role.name }：${sessionScope.manager.name }
 						</div>
 					</li>
-				</ul>
+				</ul> --%>
 				<!-- end sidebar user -->
 				<!-- begin sidebar nav -->
 				<ul class="nav">
 					<li class="nav-header">Navigation</li>
 					<!-- 菜单 -->
-					<c:forEach items="${menuList}" var="menu" varStatus="status">
-						<li class="has-sub">
-							<a href="javascript:;">
-								<c:choose>
-									<c:when test="${status.index eq 0}">
-										<i class="fa fa-inbox"></i> 
-									</c:when>
-									<c:when test="${status.index eq 1}">
-											<i class="fa fa-cogs"></i> 
-									</c:when>
-									<c:when test="${status.index eq 2}">
-										<i class="fa fa-laptop"></i> 
-									</c:when>
-									<c:when test="${status.index eq 3}">
-										<i class="fa fa-inbox"></i> 
-									</c:when>
-									<c:when test="${status.index eq 4}">
-										<i class="fa fa-suitcase"></i> 
-									</c:when>
-									<c:when test="${status.index eq 5}">
-										<i class="fa fa-file-o"></i> 
-									</c:when>
-									<c:otherwise>
-										<i class="fa fa-align-left"></i> 
-									</c:otherwise>
-									
-								</c:choose>
-								<b class="caret pull-right"></b>
-								<span>${menu.menuname }</span>
-							</a>
-							<!-- 目录 -->
-							<ul class="sub-menu">
-								<c:forEach items="${catalogList}" var="catalog">
-									<c:if test="${catalog.menuId==menu.id && menu.id == 2}">
-										<c:forEach items="${moduleList}" var="module" varStatus="i">
-											<c:if test="${module.catalogId==catalog.id}">
-												<li class="has-sub">
-													<a href="${base}${module.moduleurl}${module.moduleact}" target="iframe-content">
-													    ${module.modulename}
-													</a>
-												</li>
-											</c:if>
-										</c:forEach>
-									</c:if>
-									<c:if test="${catalog.menuId==menu.id && menu.id != 2}">
-										<li class="has-sub">
-											<a href="javascript:;">
-									            <b class="caret pull-right"></b>
-									            ${catalog.catalogname }
-									        </a>
-											<!-- 模块 -->
-											<ul class="sub-menu">
-												<c:forEach items="${moduleList}" var="module" varStatus="i">
-													<c:if test="${module.catalogId==catalog.id}">
-														<li class="nav-url">
-															<a href="${base}${module.moduleurl}${module.moduleact}" target="iframe-content">
-															    ${module.modulename}
-															</a>
-														</li>
-													</c:if>
-												</c:forEach>
-											</ul>
-										</li>
-									</c:if>
-								</c:forEach>
-							</ul>
-						</li>
-					</c:forEach>
+					<li class="has-sub">
+						<a href="${base }/admin/appInfo/onList" target="iframe-content">
+							<i class="fa fa-inbox"></i> 
+							<b class="caret pull-right"></b>
+							<span>APP信息</span>
+						</a>
+					</li>
+					<li class="has-sub">
+						<a href="${base }/admin/eventInfo/onList" target="iframe-content">
+							<i class="fa fa-inbox"></i> 
+							<b class="caret pull-right"></b>
+							<span>事件信息</span>
+						</a>
+					</li>
 			        <!-- begin sidebar minify button -->
 					<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
 			        <!-- end sidebar minify button -->
