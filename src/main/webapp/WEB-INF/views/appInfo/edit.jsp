@@ -46,8 +46,8 @@
         			$("#sendTime").attr("data-parsley-required","false");      			
         		}
         	});
-        	var rAppId=$("#appId").val();
         	//自定义校验(APPID是否重复)
+        	var rAppId=$("#appId").val();
 	    	Parsley.addValidator('appidverify', {
   					validateString: function(value, country) {
 	  					var isTrue = true;	
@@ -122,7 +122,7 @@
                     <div class="form-group" id="sendTimeDiv"  style="display:none;">
                         <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>时间间隔:</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="sendTime" maxlength="64" value="${requestScope.appInfo.status }" data-parsley-required="false" data-parsley-type="number" type="text" id="sendTime" ltype="text" class="form-control parsley-validated"/>
+                            <input name="sendTime" maxlength="64" value="${requestScope.appInfo.sendTime }" data-parsley-required="false" data-parsley-type="number" type="text" id="sendTime" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     

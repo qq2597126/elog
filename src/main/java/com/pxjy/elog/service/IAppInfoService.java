@@ -1,5 +1,7 @@
 package com.pxjy.elog.service;
 
+import java.util.List;
+
 import com.pxjy.common.paginator.IPage;
 import com.pxjy.elog.domain.bo.AppInfoBo;
 import com.pxjy.elog.domain.param.AppInfoParam;
@@ -57,4 +59,8 @@ public interface IAppInfoService {
 	 * 根据ID进行查询
 	 */
 	public AppInfoBo findAppinfoByAppId(AppInfoBo appInfoBo);
+	/**
+	 * 查询全部
+	 */
+	public List<AppInfoBo> findAll();
 }

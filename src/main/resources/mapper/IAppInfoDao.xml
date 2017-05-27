@@ -14,6 +14,7 @@
 		<if test="null != param.appId and '' != param.appId">
 			`app_id` = #{param.appId}
 		</if>
+		STATUS='1'
 		</where>
 		order by status desc,CREATE_TIME desc
 	</select>
@@ -83,5 +84,9 @@
 	<delete id="doDelAppInfo" parameterType="int">
 		delete from `app_info` where ID = #{_parameter}
 	</delete>
-
+	<!-- 查询全部 -->
+	<select id="findAll" resultType="appInfoBo">
+		select * from `app_info`
+		where `STATUS`='1'	
+	</select>
 </mapper>

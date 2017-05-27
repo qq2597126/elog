@@ -58,5 +58,31 @@
 	<delete id="doDelEventInfo" parameterType="int">
 		delete from `event_info` where ID = #{_parameter}
 	</delete>
-
+	<!-- 根据APPID进行查询 -->
+	<select id="findEventInfoByAppId" resultType="eventInfoBo">
+		select * from `event_info` where `APP_ID` = #{appId}
+	</select>
+	<!-- 批量插入 -->
+	<insert id="doAddList" parameterType="eventInfoBo">
+		insert into `event_info` (
+			`APP_ID`, 
+			`EVENT_KEY`, 
+			`EVENT_NAME`, 
+			`CREATE_TIME`
+		) values
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.appId}, 
+				#{item.eventKey}, 
+				#{item.eventName}, 
+				CURRENT_TIMESTAMP()
+			)
+		</foreach>
+		
+	</insert>
+	<!-- 根据APPID进行删除 -->
+	<select id="delEventInfoBoByAppId" parameterType="eventInfoBo">
+		delete from `event_info` 
+		where  `APP_ID` = #{appId}
+	</select>
 </mapper>

@@ -14,7 +14,28 @@
             self.location = baseUrl + '/admin/eventInfo/onList';    
         }
         $(function(){
-        	$("#appId",).
+        	//填充下拉列表
+        	$.ajax({
+        		url:baseUrl + '/admin/appInfo/getAll',
+        		type:"post",
+        		dataType:"json",
+        		success:function(msg){
+        			if(msg.status=="1"){
+        				var da = msg.data;
+        				if(da!=null){
+        					for (var i = 0; i < da.length; i++) {
+	        					$("#appId").append('<option value="'+da[i].appId+'">标示名称：'+da[i].appName+'&nbsp;&nbsp;&nbsp;标示ID：'+da[i].appId+'</option>');
+							}
+        				}
+        			}else{
+        				alert(msg.errorMessage);
+        			}
+        			//设置默认值
+        			 var val = '${requestScope.eventInfo.appId}';
+        			 console.info(val);
+     				$("#appId").val(val);
+        		}
+        	});
         })
     </script>
     <style type="text/css">
@@ -39,6 +60,14 @@
                     <input type="hidden" name="nowPage" id="commonNowPage" value="${requestScope.nowPage}"/>
                     <input type="hidden" name="pageSize" id="commonPageSize" value="${requestScope.pageSize}"/>
                     <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="eventInfo.appId">APP标识：</label>
+                        <div class="col-md-6 col-sm-6 ui-sortable">
+<%--                             <input name="appId" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.appId }" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
+ --%>                   	<select id="appId" name="appId" class="form-control parsley-validated">
+ 							</select>     
+ 						</div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-4 col-sm-4 ui-sortable" for="eventInfo.eventKey">事件标识：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
                             <input name="eventKey" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.eventKey }" type="text" id="eventKey" ltype="text" class="form-control parsley-validated"/>
@@ -49,14 +78,6 @@
                         <div class="col-md-6 col-sm-6 ui-sortable">
                             <input name="eventName" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.eventName }" type="text" id="eventName" ltype="text" class="form-control parsley-validated"/>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="eventInfo.appId">APP标识：</label>
-                        <div class="col-md-6 col-sm-6 ui-sortable">
-<%--                             <input name="appId" maxlength="64" data-parsley-required="true" value="${requestScope.eventInfo.appId }" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
- --%>                   	<select id="appId" name="appId" class="form-control parsley-validated">
- 							</select>     
- 						</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-4 col-sm-4 ui-sortable"></label>

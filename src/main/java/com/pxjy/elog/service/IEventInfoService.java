@@ -1,5 +1,7 @@
 package com.pxjy.elog.service;
 
+import java.util.List;
+
 import com.pxjy.common.paginator.IPage;
 import com.pxjy.elog.domain.bo.EventInfoBo;
 import com.pxjy.elog.domain.param.EventInfoParam;
@@ -52,5 +54,12 @@ public interface IEventInfoService {
 	 * @time: 2017-05-25
 	 */
 	public void doDelEventInfo(Integer id);
-
+	/**
+	 * 根据APPID进行查询
+	 */
+	public List<EventInfoBo> findEventInfoByAppId(EventInfoBo eventInfoBo);
+	/**
+	 * 批量插入
+	 */
+	public void doAddList(List<EventInfoBo>  eventInfoBos);
 }

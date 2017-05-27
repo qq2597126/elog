@@ -1,5 +1,7 @@
 package com.pxjy.elog.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.pxjy.common.paginator.IPage;
@@ -56,5 +58,16 @@ public interface IEventInfoDao {
 	 * @time: 2017-05-25
 	 */
 	public void doDelEventInfo(Integer id);
-	
+	/**
+	 * 根据APPID进行查询
+	 */
+	public List<EventInfoBo> findEventInfoByAppId(EventInfoBo eventInfoBo);
+	/**
+	 * 批量插入
+	 */
+	public void doAddList(List<EventInfoBo>  eventInfoBos);
+	/**
+	 * 根据APPID进行删除
+	 */
+	public void delEventInfoBoByAppId(EventInfoBo eventInfoBo);
 }

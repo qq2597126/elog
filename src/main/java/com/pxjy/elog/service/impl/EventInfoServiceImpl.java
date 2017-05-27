@@ -1,5 +1,7 @@
 package com.pxjy.elog.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import com.pxjy.common.paginator.IPage;
@@ -48,6 +50,19 @@ public class EventInfoServiceImpl implements IEventInfoService {
 	public void doDelEventInfo(Integer id) {
 		// TODO Auto-generated method stub
 		eventInfoDao.doDelEventInfo(id);
+	}
+	/**
+	 * 根据APPID进行查询
+	 */
+	@Override
+	public List<EventInfoBo> findEventInfoByAppId(EventInfoBo eventInfoBo) {
+		return eventInfoDao.findEventInfoByAppId(eventInfoBo);
+	}
+
+	@Override
+	public void doAddList(List<EventInfoBo> eventInfoBos) {
+		//批量插入
+		eventInfoDao.doAddList(eventInfoBos);
 	}
 
 }

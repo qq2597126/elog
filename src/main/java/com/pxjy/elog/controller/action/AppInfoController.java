@@ -22,9 +22,12 @@ import com.pxjy.common.controller.BaseController;
 import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
 import com.pxjy.elog.domain.bo.AppInfoBo;
+import com.pxjy.elog.domain.bo.EventInfoBo;
 import com.pxjy.elog.domain.bo.EventLogBo;
 import com.pxjy.elog.domain.param.AppInfoParam;
 import com.pxjy.elog.service.IAppInfoService;
+import com.pxjy.elog.service.IEventInfoService;
+import com.pxjy.elog.service.IEventLogService;
 
 /**
  * APP信息控制器
@@ -38,7 +41,9 @@ public class AppInfoController extends BaseController {
 	private static String RETURN_DEFAULT_STATUS="0";
 	@Autowired
 	private IAppInfoService appInfoService;
-
+	
+	@Autowired
+	private IEventInfoService eventInfoService;
 	/**
 	 * 进入APP信息列表
 	 * @return String
@@ -49,7 +54,6 @@ public class AppInfoController extends BaseController {
 	 public String onAppInfoList() {
 		return "appInfo/list";
 	}
-
 	/**
 	 * 查询APP信息列表
 	 * @param request
@@ -108,6 +112,23 @@ public class AppInfoController extends BaseController {
 			resultMap.put("data",appinfo);
 			status=RETURN_SUCCESS_STATUS;
 		}
+		resultMap.put("errorMessage",errorMessage);
+		resultMap.put("status",status);
+		return resultMap;
+	}
+	/**
+	 * 根据APPID进行查询
+	 */
+	@RequestMapping("/getAll")
+	@ResponseBody
+	public Map<String,Object> getAll(){
+		String status=RETURN_DEFAULT_STATUS;
+		String errorMessage="";
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		//查询所有的
+		List<AppInfoBo> findAll = appInfoService.findAll();
+		status=RETURN_SUCCESS_STATUS;
+		resultMap.put("data",findAll);
 		resultMap.put("errorMessage",errorMessage);
 		resultMap.put("status",status);
 		return resultMap;
@@ -219,5 +240,44 @@ public class AppInfoController extends BaseController {
 		
 		return "appInfo/list";
 	}
-
+	/**
+	 * 事件信息的Copy   copyAppId   toCopyAppId
+	 */
+	@RequestMapping("/eventInfoCopy")
+	public String copyEventInfoByAppId(String copyAppId,String toCopyAppId){
+			AppInfoBo appInfoBo = new AppInfoBo();
+			appInfoBo.setAppId(toCopyAppId);
+			AppInfoBo toInfo = appInfoService.findAppinfoByAppId(appInfoBo);
+			if(toInfo!=null){
+				EventInfoBo copyEventInfoBo = new EventInfoBo();
+				copyEventInfoBo.setAppId(copyAppId);
+				List<EventInfoBo> copyInfos = eventInfoService.findEventInfoByAppId(copyEventInfoBo);
+				if(copyInfos!=null&&copyInfos.size()>0){
+					//数据Copy
+					for (EventInfoBo eventInfoBo : copyInfos) {
+						eventInfoBo.setAppId(toCopyAppId);
+					}
+					
+					eventInfoService.doAddList(copyInfos);
+				}
+			}
+		return onAppInfoList();
+	}
+	/**
+	 * 跳转复制页面
+	 */
+	@RequestMapping(value="/onCopy")
+	public String onCopyEventInfo(HttpServletRequest request) {
+		String appId = request.getParameter("appId");
+		//查询当前APPID是否存在,不存在,跳转List页面
+		AppInfoBo appInfoBo = new AppInfoBo();
+		appInfoBo.setAppId(appId);
+		AppInfoBo infoBo = appInfoService.findAppinfoByAppId(appInfoBo);
+		request.setAttribute("appId",appId);
+		if(infoBo!=null){
+			return "appInfo/copy";
+		}else{
+			return onAppInfoList();
+		}
+	}
 }

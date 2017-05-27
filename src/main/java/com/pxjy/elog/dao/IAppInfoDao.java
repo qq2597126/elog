@@ -1,5 +1,7 @@
 package com.pxjy.elog.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.pxjy.common.paginator.IPage;
@@ -60,5 +62,8 @@ public interface IAppInfoDao {
 	 * 根据APPID进行查询
 	 */
 	public AppInfoBo findAppInfoByAppId(AppInfoBo appInfoBo);
-	
+	/**
+	 * 查询全部
+	 */
+	public List<AppInfoBo> findAll();
 }

@@ -1,18 +1,25 @@
 package com.pxjy.elog.controller.action;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pxjy.common.controller.BaseController;
 import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
+import com.pxjy.elog.domain.bo.AppInfoBo;
 import com.pxjy.elog.domain.bo.EventInfoBo;
 import com.pxjy.elog.domain.param.EventInfoParam;
 import com.pxjy.elog.service.IEventInfoService;
@@ -25,7 +32,8 @@ import com.pxjy.elog.service.IEventInfoService;
 @Controller
 @RequestMapping("/admin/eventInfo")
 public class EventInfoController extends BaseController {
-	
+	private static String RETURN_SUCCESS_STATUS="1";
+	private static String RETURN_DEFAULT_STATUS="0";
 	@Autowired
 	private IEventInfoService eventInfoService;
 
@@ -173,6 +181,30 @@ public class EventInfoController extends BaseController {
 		eventInfoService.doDelEventInfo(id);
 		
 		return "eventInfo/list";
+	}
+	/**
+	 * 根据APPID进行获取事件信息
+	 */
+	@RequestMapping("/getEventInfoByAppId")
+	@ResponseBody
+	public Map<String,Object> getEventInfoByAppId(String appId){
+		String status=RETURN_DEFAULT_STATUS;
+		String errorMessage="";
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		//查询所有的
+		if(StringUtils.isBlank(appId)){
+			errorMessage="缺少参数appId";
+		}else{
+			EventInfoBo eventInfoBo = new EventInfoBo();
+			eventInfoBo.setAppId(appId);
+			
+			List<EventInfoBo> byAppId = eventInfoService.findEventInfoByAppId(eventInfoBo);
+			status=RETURN_SUCCESS_STATUS;
+			resultMap.put("data",byAppId);
+		}
+		resultMap.put("errorMessage",errorMessage);
+		resultMap.put("status",status);
+		return resultMap;
 	}
 
 }

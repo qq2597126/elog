@@ -102,9 +102,11 @@
                         id: 'operation', title: '操作', type: 'string', columnClass: 'text-center',columnStyle: 'width: 140px;',
                         resolution: function (value, record, column, grid, dataNo, columnNo) {
                             var content = '';
-                            content += '<a class="edit btn btn-xs btn-warning" data-toggle="modal" data-value="'+dataNo+'" onclick="edit('+record.id+')"><i class="fa fa-edit"></i>编辑</a>&nbsp;';
-                            content += '<a class="edit btn btn-xs btn-danger" data-toggle="modal" data-value="'+dataNo+'" onclick="del('+record.id+')"><i class="fa fa-edit"></i>删除</a>&nbsp;';
-                          
+                            if(record.status=='1'){
+	                            content += '<a class="edit btn btn-xs btn-warning" data-toggle="modal" data-value="'+dataNo+'" onclick="edit('+record.id+')"><i class="fa fa-edit"></i>编辑</a>&nbsp;';
+                                content += '<a class="edit btn btn-xs btn-danger" data-toggle="modal" data-value="'+dataNo+'" onclick="del('+record.id+')"><i class="fa fa-edit"></i>删除</a>&nbsp;';                        
+                                content += '<a class="edit btn btn-xs btn-danger" data-toggle="modal" data-value="'+dataNo+'" onclick="copyAppId(\''+record.appId+'\')"> <i class="fa fa-edit"></i>复制</a>&nbsp;';                        
+                            }
                             grid.parameters = new Object();
                             grid.parameters.nowPage = '';
                             grid.parameters.pageSize = '';
@@ -181,6 +183,13 @@
     
     function add(){
       window.location = baseUrl + "/admin/appInfo/onAdd";
+    }
+    function copyAppId(id){
+    	//弹出Copy框
+    	var actionUrl = baseUrl + "/admin/appInfo/onCopy";
+        $("#appId").val(id);
+        $("#commonForm").attr("action",actionUrl);
+        $("#commonForm").submit(); 
     }
     function edit(id){
       var actionUrl = baseUrl + "/admin/appInfo/onEdit";
