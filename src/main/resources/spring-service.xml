@@ -12,4 +12,6 @@
 			
 	<!-- APP信息 service -->	
 	<bean id="appInfoService" class="com.pxjy.elog.service.impl.AppInfoServiceImpl"/>
+	<bean id="eventInfoService" class="com.pxjy.elog.service.impl.EventInfoServiceImpl"/>
+	<bean id="eventLogService" class="com.pxjy.elog.service.impl.EventLogServiceImpl"></bean>
 </beans> 

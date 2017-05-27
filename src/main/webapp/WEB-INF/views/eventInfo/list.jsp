@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>${systemName}-APP信息</title>
+    <title>${systemName}-事件信息</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <%@ include file="/jsp/common/meta.jsp"%>
     <!--dtgrid资源包引入-->
@@ -23,7 +23,7 @@
         <!-- 列表标题条 -->
         <div class="row">
             <div class="rowTitle col-md-12 col-sm-12">
-                <h4>APP信息管理</h4>
+                <h4>事件信息管理</h4>
             </div>
         </div>
         <!--数据列表部分-->
@@ -37,8 +37,8 @@
                 </div>
                 <div class="query col-md-10 col-sm-12 col-xs-12 text-right">
                   <div class="form-group inlineBlock">
-                      <label>APP标示</label>
-                      <input id="appInfo.appId" type="text" class="formList" name="appInfo.appId" placeholder="请输入APP标示" value="${requestScope.appId }"/>
+                      <label>APP标识</label>
+                      <input id="eventInfo.appId" type="text" class="formList" name="eventInfo.appId" placeholder="请输入APP标识" value="${requestScope.appId }"/>
                   </div>
                   <div class="form-group inlineBlock">
                       <button class="queryBtn btn btn-success" type="button">查询</button>
@@ -102,56 +102,25 @@
                         id: 'operation', title: '操作', type: 'string', columnClass: 'text-center',columnStyle: 'width: 140px;',
                         resolution: function (value, record, column, grid, dataNo, columnNo) {
                             var content = '';
-                            if(record.status=='1'){
-	                            content += '<a class="edit btn btn-xs btn-warning" data-toggle="modal" data-value="'+dataNo+'" onclick="edit('+record.id+')"><i class="fa fa-edit"></i>编辑</a>&nbsp;';
-                                content += '<a class="edit btn btn-xs btn-danger" data-toggle="modal" data-value="'+dataNo+'" onclick="del('+record.id+')"><i class="fa fa-edit"></i>删除</a>&nbsp;';                        
-                                content += '<a class="edit btn btn-xs btn-danger" data-toggle="modal" data-value="'+dataNo+'" onclick="copyAppId(\''+record.appId+'\')"> <i class="fa fa-edit"></i>复制</a>&nbsp;';                        
-                            }
+                            content += '<a class="edit btn btn-xs btn-warning" data-toggle="modal" data-value="'+dataNo+'" onclick="edit('+record.id+')"><i class="fa fa-edit"></i>编辑</a>&nbsp;';
+                            content += '<a class="edit btn btn-xs btn-danger" data-toggle="modal" data-value="'+dataNo+'" onclick="del('+record.id+')"><i class="fa fa-edit"></i>删除</a>&nbsp;';
+                          
                             grid.parameters = new Object();
                             grid.parameters.nowPage = '';
                             grid.parameters.pageSize = '';
-                            grid.parameters.appId = $("input[name='appInfo.appId']").val();
+                            grid.parameters.appId = $("input[name='eventInfo.appId']").val();
                             return content;
                         }
                     }
-                    ,{ id: 'createUser', title: '创建人', type: 'string', columnClass: 'text-center' }
+                    ,{ id: 'appId', title: 'APP标识', type: 'string', columnClass: 'text-center' }
+                    ,{ id: 'eventKey', title: '事件标识', type: 'string', columnClass: 'text-center' }
+                    ,{ id: 'eventName', title: '事件名称', type: 'string', columnClass: 'text-center' }
                     ,{ id: 'createTime', title: '创建时间', type: 'date', format:'yyyy-MM-dd hh:mm:ss', otype:'time_stamp_ms', columnClass: 'text-center' }
-                    ,{ id: 'appId', title: 'APP标示', type: 'string', columnClass: 'text-center' }
-                    ,{ id: 'appName', title: 'APP显示名称', type: 'string', columnClass: 'text-center' }
-                    ,{ id: 'appKey', title: 'APP验签加密字符串', type: 'string', columnClass: 'text-center' }
-                    ,{ id: 'sendTime', title: '间隔发送', type: 'string', columnClass: 'text-center',
-                    	resolution: function (value, record, column, grid, dataNo, columnNo) {
-                            if(record.sendType=='0'){
-                            	return "-";
-                            }
-                            return value;
-                        }	
-                    }
-                    ,{ id: 'sendType', title: '发送类型', type: 'string', columnClass: 'text-center',
-                    	resolution: function (value, record, column, grid, dataNo, columnNo) {
-                            if(value=='0'){
-                            	return "启动时发送";
-                            }else if(value=='1'){
-                            	return "间隔发送";
-                            }
-                            return value;
-                        }
-                    }
-                    ,{ id: 'status', title: '状态', type: 'string', columnClass: 'text-center', 
-                    	resolution: function (value, record, column, grid, dataNo, columnNo) {
-                            if(value=='0'){
-                            	return "无效";
-                            }else if(value=='1'){
-                            	return "有效";
-                            }
-                            return value;
-                        }
-                    }
                 ];
                 var dtGridOption_2_1_2 = {
                     lang: 'zh-cn',
                     ajaxLoad: true,
-                    loadURL: baseUrl + '/admin/appInfo/list4ajax',
+                    loadURL: baseUrl + '/admin/eventInfo/list4ajax',
                     columns: dtGridColumns_2_1_2,
                     gridContainer: 'dtGridContainer_2_1_2',
                     toolbarContainer: 'dtGridToolBarContainer_2_1_2',
@@ -170,7 +139,7 @@
         },
         search: function() {
             grid.parameters = new Object();
-            grid.parameters.appId = $('input[name="appInfo.appId"]').val();
+            grid.parameters.appId = $('input[name="eventInfo.appId"]').val();
             grid.refresh(true);
         },
         getOppRowInfo: function(num) {
@@ -182,19 +151,14 @@
     var adminList = new AdminList();
     
     function add(){
-      window.location = baseUrl + "/admin/appInfo/onAdd";
-    }
-    function copyAppId(id){
-    	//弹出Copy框
-    	var actionUrl = baseUrl + "/admin/appInfo/onCopy";
-        $("#appId").val(id);
-        $("#commonForm").attr("action",actionUrl);
-        $("#commonForm").submit(); 
+    	//添加事件创建Dialog 进行显示
+    	
+      window.location = baseUrl + "/admin/eventInfo/onAdd";
     }
     function edit(id){
-      var actionUrl = baseUrl + "/admin/appInfo/onEdit";
+      var actionUrl = baseUrl + "/admin/eventInfo/onEdit";
       $("#editId").val(id);
-      $("#appId").val($("input[name='appInfo.appId']").val());
+      $("#appId").val($("input[name='eventInfo.appId']").val());
       $("#commonNowPage").val(grid.pager.nowPage);
       $("#commonPageSize").val(grid.pager.pageSize);
       $("#commonForm").attr("action",actionUrl);
@@ -202,9 +166,9 @@
     }
     function del(id){
       if (confirm('确定删除?')){
-        var actionUrl = baseUrl + "/admin/appInfo/doDel";
+        var actionUrl = baseUrl + "/admin/eventInfo/doDel";
           $("#editId").val(id);
-          $("#appId").val($("input[name='appInfo.appId']").val());
+          $("#appId").val($("input[name='eventInfo.appId']").val());
           $("#commonNowPage").val(grid.pager.nowPage);
           $("#commonPageSize").val(grid.pager.pageSize);
           $("#commonForm").attr("action",actionUrl);

@@ -12,18 +12,26 @@
 		select * from `app_info` 
 		<where>
 		<if test="null != param.appId and '' != param.appId">
-			`appId` = #{param.appId}
+			`app_id` = #{param.appId}
 		</if>
+		STATUS='1'
 		</where>
-		order by ID desc
+		order by status desc,CREATE_TIME desc
 	</select>
-	
+	<!-- 根据APPID进行获取 -->
+	<select id="findAppInfoByAppId" parameterType="appInfoBo" resultType="appInfoBo">
+		select * from 	`app_info`
+		where 	`app_id` = #{appId}
+		limit 1
+	</select>
 	<!-- 添加APP信息 -->
 	<insert id="doAddAppInfo" parameterType="appInfoBo">
 		insert into `app_info` (
 			`APP_ID`, 
 			`APP_KEY`, 
 			`APP_NAME`, 
+			`SEND_TIME`, 
+			`SEND_TYPE`, 
 			`CREATE_USER`, 
 			`CREATE_TIME`, 
 			`STATUS`
@@ -32,6 +40,8 @@
 			#{appId}, 
 			#{appKey}, 
 			#{appName}, 
+			#{sendTime},
+			#{sendType}, 
 			#{createUser}, 
 			CURRENT_TIMESTAMP(), 
 			#{status}
@@ -54,10 +64,16 @@
 			<if test="null != appName and '' != appName">
 				`APP_NAME` = #{appName},
 			</if>
-			<if test="null != createUser and '' != createUser">
+			<if test="null != sendType ">
+				`SEND_TYPE` = #{sendType},
+			</if>
+			<if test="null != sendTime ">
+				`SEND_TIME` = #{sendTime},
+			</if>
+			<if test="null != createUser ">
 				`CREATE_USER` = #{createUser},
 			</if>
-			<if test="null != status and '' != status">
+			<if test="null != status ">
 				`STATUS` = #{status},
 			</if>
 		</set>
@@ -68,5 +84,9 @@
 	<delete id="doDelAppInfo" parameterType="int">
 		delete from `app_info` where ID = #{_parameter}
 	</delete>
-
+	<!-- 查询全部 -->
+	<select id="findAll" resultType="appInfoBo">
+		select * from `app_info`
+		where `STATUS`='1'	
+	</select>
 </mapper>

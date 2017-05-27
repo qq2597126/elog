@@ -13,6 +13,42 @@
         function cancleClick(){
             self.location = baseUrl + '/admin/appInfo/onList';    
         }
+        $(function(){
+        	//定时发送
+        	$("#sendType").on("change",function(){
+        		var val = $("#sendType").val();
+        		if(val=="1"){
+        			$("#sendTimeDiv").show();
+        			$("#sendTime").attr("data-parsley-required","true"); 
+        		}else{
+        			$("#sendTimeDiv").hide();
+        			$("#sendTime").attr("data-parsley-required","false");      			
+        		}
+        	});
+        	
+        	//验证
+        	Parsley.addValidator('appidverify', {
+					validateString: function(value, country) {
+  					var isTrue = true;	
+  					var appId = $("#appId").val();
+  					$.ajax({
+		    				 type: "post",
+		    				 url: baseUrl+"/admin/appInfo/getAppinfoByAppId",
+		    				 dataType: "json",
+		    				 async:false,
+		    				 data:"appId="+appId,
+		    				 success:function(msg){
+		    					 if(msg.data!=null||msg.data!=undefined){
+		    						isTrue = false;
+		    					 }
+		    				 }
+	    			});
+					return isTrue;
+					},
+				messages: {en: 'There is no such zip for the country'}
+			});
+        })
+        
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -32,33 +68,37 @@
              <div class="panel-body panel-form">
                   <form data-parsley-validate="true" name="schoolForm" id="schoolForm" method="post" action="${base}/admin/appInfo/add" onsubmit="return checkForm();" class="form-horizontal form-bordered" data-validate="parsley">
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP_ID：</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP标示：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="appId" maxlength="64" data-parsley-required="true" type="text" id="appId" ltype="text" class="form-control parsley-validated"/>
+                            <input name="appId" maxlength="64"  type="text" id="appId" ltype="text" 
+                            data-parsley-required="true"
+                            data-parsley-appidverify="us" 
+                            data-parsley-appidverify-message="AppID已经存在" 
+                            class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP_KEY：</label>
-                        <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="appKey" maxlength="64" data-parsley-required="true" type="text" id="appKey" ltype="text" class="form-control parsley-validated"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP_NAME：</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>APP显示名称：</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
                             <input name="appName" maxlength="64" data-parsley-required="true" type="text" id="appName" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>CREATE_USER：</label>
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>发送类型:</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="createUser" maxlength="64" data-parsley-required="true" type="text" id="createUser" ltype="text" class="form-control parsley-validated"/>
+                            
+<!--                             <input name="sendType" maxlength="64" data-parsley-required="true" type="text" id="sendType" ltype="text" class="form-control parsley-validated"/>
+ -->                            
+ 								<select id="sendType" name="sendType" class="form-control parsley-validated">
+ 									<option value="0" selected = "selected">启动时发送</option>
+ 									<option value="1">间隔发送</option>
+ 								</select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>1有效，0无效：</label>
+                    <div class="form-group" id="sendTimeDiv"  style="display:none;">
+                        <label class="control-label col-md-4 col-sm-4 ui-sortable" for="name"><span style="color: red">*</span>时间间隔:</label>
                         <div class="col-md-6 col-sm-6 ui-sortable">
-                            <input name="status" maxlength="64" data-parsley-required="true" type="text" id="status" ltype="text" class="form-control parsley-validated"/>
+                            <input name="sendTime" maxlength="64"  data-parsley-required="false" data-parsley-type="number" type="text" id="sendTime" ltype="text" class="form-control parsley-validated"/>
                         </div>
                     </div>
                     <div class="form-group">
