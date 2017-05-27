@@ -24,7 +24,7 @@
         				var da = msg.data;
         				if(da!=null){
         					for (var i = 0; i < da.length; i++) {
-	        					$("#appId").append('<option value="'+da[i].appId+'">标示名称：'+da[i].appName+'&nbsp;&nbsp;&nbsp;标示ID：'+da[i].appId+'</option>');
+	        					$("#appId").append('<option value="'+da[i].appId+'">APP_NAME：'+da[i].appName+'&nbsp;&nbsp;&nbsp;APP_ID：'+da[i].appId+'</option>');
 							}
         				}
         			}else{

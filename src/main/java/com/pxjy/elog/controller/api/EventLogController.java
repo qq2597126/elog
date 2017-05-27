@@ -1,6 +1,7 @@
 package com.pxjy.elog.controller.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.pxjy.common.lang.DateUtil;
 import com.pxjy.elog.domain.bo.EventLogBo;
 import com.pxjy.elog.service.IEventLogService;
 
@@ -45,10 +47,15 @@ public class EventLogController {
 						EventLogBo elb = new EventLogBo();
 						@SuppressWarnings( "rawtypes")
 						Map map = (Map) object;
-						
-						elb.setCreateTime(map.get("createTime").toString());
-						
+						try{
+							Long createTime = (Long) map.get("createTime");
+							elb.setCreateTime(DateUtil.getYearMonthDay(new Date(createTime),DateUtil.FULL_FORMATER));
+						}catch (Exception e) {
+							elb.setCreateTime(DateUtil.getYearMonthDay(new Date(),DateUtil.FULL_FORMATER));
+							System.out.println(e.getMessage());
+						}
 						elb.setUserId(map.get("userId").toString());
+						
 						elb.setEventKey(eventLogBo.getEventKey());
 						elb.setAppBuild(eventLogBo.getAppBuild());
 						elb.setOsVersion(eventLogBo.getOsVersion());

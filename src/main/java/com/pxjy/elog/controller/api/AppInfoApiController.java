@@ -1,5 +1,9 @@
 package com.pxjy.elog.controller.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +27,8 @@ import com.pxjy.elog.service.IAppInfoService;
 @Controller
 @RequestMapping("/api/appInfo")
 public class AppInfoApiController extends BaseController {
-	
+	private static String RETURN_SUCCESS_STATUS="1";
+	private static String RETURN_DEFAULT_STATUS="0";
 	@Autowired
 	private IAppInfoService appInfoService;
 
@@ -104,6 +109,29 @@ public class AppInfoApiController extends BaseController {
 		}	
 		appInfoService.doDelAppInfo(id);
 		return ApiResultWapper.getVoidInstance();
+	}
+	/**
+	 * 根据APPID进行查询
+	 */
+	@RequestMapping("/getAppinfoByAppId")
+	@ResponseBody
+	public Map<String,Object> getAppInfoByAppId(String appId){
+		String status=RETURN_DEFAULT_STATUS;
+		String errorMessage="";
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		if(StringUtils.isBlank(appId)){
+			errorMessage="缺少参数appId";
+		}else{
+			//数据解析
+			AppInfoBo appInfoBo = new AppInfoBo();
+			appInfoBo.setAppId(appId);
+			AppInfoBo appinfo = appInfoService.findAppinfoByAppId(appInfoBo);
+			resultMap.put("data",appinfo);
+			status=RETURN_SUCCESS_STATUS;
+		}
+		resultMap.put("errorMessage",errorMessage);
+		resultMap.put("status",status);
+		return resultMap;
 	}
 
 }

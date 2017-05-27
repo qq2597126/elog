@@ -36,13 +36,11 @@ public class EventInfoServiceImpl implements IEventInfoService {
 
 	@Override
 	public void doAddEventInfo(EventInfoBo eventInfoBo) {
-		// TODO Auto-generated method stub
 		eventInfoDao.doAddEventInfo(eventInfoBo);
 	}
 
 	@Override
 	public void doEditEventInfo(EventInfoBo eventInfoBo) {
-		// TODO Auto-generated method stub
 		eventInfoDao.doEditEventInfo(eventInfoBo);
 	}
 
@@ -62,7 +60,9 @@ public class EventInfoServiceImpl implements IEventInfoService {
 	@Override
 	public void doAddList(List<EventInfoBo> eventInfoBos) {
 		//批量插入
-		eventInfoDao.doAddList(eventInfoBos);
+		for (EventInfoBo eventInfoBo : eventInfoBos) {
+			eventInfoDao.doAddEventInfo(eventInfoBo);
+		}
 	}
 
 }

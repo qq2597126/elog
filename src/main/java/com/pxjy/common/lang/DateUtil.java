@@ -270,7 +270,9 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		return sdf.format(new Date());
 	}
-	
+	public static String getYearMonthDay(Date date,SimpleDateFormat format){
+		return format.format(date);
+	}
 	public static Date getNowDateTime() {
 		return new Date();
 	}

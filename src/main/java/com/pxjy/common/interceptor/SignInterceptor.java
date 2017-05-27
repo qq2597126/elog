@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pxjy.common.constant.Property;
 import com.pxjy.common.lang.StringUtil;
+import com.pxjy.elog.domain.bo.AppInfoBo;
 import com.pxjy.elog.service.IAppInfoService;
 
 public class SignInterceptor implements HandlerInterceptor {
@@ -29,7 +31,8 @@ public class SignInterceptor implements HandlerInterceptor {
 	private static Log log = LogFactory.getLog(SignInterceptor.class);
 	public static final String SIGN = "sign";
 	public static final String APP_ID = "appid";
-
+	public static final Map<String,String> appKey = new HashMap<String,String>();
+	
 	@Autowired
 	private IAppInfoService appInfoService;
 	
@@ -119,8 +122,20 @@ public class SignInterceptor implements HandlerInterceptor {
 	}
 	
 	private String getAppKey(String appId) {
+		//此处的标签设置
+		String appKeyStr = appKey.get(appId);
+		if(StringUtils.isBlank(appKeyStr)){
+			//查询数据库
+			AppInfoBo appInfoBo = new AppInfoBo();
+			appInfoBo.setAppId(appId);
+			AppInfoBo infoBo = appInfoService.findAppinfoByAppId(appInfoBo);
+			if(infoBo!=null){
+				appKeyStr =  infoBo.getAppKey();
+				appKey.put(infoBo.getAppId(),appKeyStr);
+			}
+		}
 		
-		return null;
+		return appKeyStr;
 	}
 
 	/**

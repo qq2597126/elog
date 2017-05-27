@@ -22,6 +22,7 @@
 	<select id="findAppInfoByAppId" parameterType="appInfoBo" resultType="appInfoBo">
 		select * from 	`app_info`
 		where 	`app_id` = #{appId}
+		and status='1'
 		limit 1
 	</select>
 	<!-- 添加APP信息 -->

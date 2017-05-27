@@ -32,9 +32,7 @@
 			#{eventName}, 
 			CURRENT_TIMESTAMP()
 		)
-		<selectKey keyProperty="id"  resultType="java.lang.Integer">
-			select last_insert_id() as id from `event_info` limit 1
-		</selectKey>
+		ON DUPLICATE KEY UPDATE CREATE_TIME=CURRENT_TIMESTAMP()
 	</insert>
 		
 	<!-- 编辑事件信息 -->

@@ -37,6 +37,10 @@
 		<property name="DEFAULT_MANAGER_LOGO" value="${default.manager.logo}"/>
 		<property name="DEFAULT_SYSTEM_ICON" value="${default.system.icon}"/>
 		<!-- 图片上传预览相关配置end -->
+		<!-- 印签的设置begin -->
+		<property name="IS_VERIFY_SIGN" value="${is.verify_sign}"/>
+		<!-- 印签的设置 end-->
+		
 	</bean>
 	
 	<!-- mongo的配置 -->
