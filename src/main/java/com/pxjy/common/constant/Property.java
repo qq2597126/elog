@@ -52,6 +52,11 @@ public class Property {
 	 */
 	public static String DEFAULT_SYSTEM_ICON;
 
+	/**
+	 * 是否进行接口验签
+	 */
+	public static boolean IS_VERIFY_SIGN;
+	
 	public static String getBASE() {
 		return BASE;
 	}
@@ -138,5 +143,13 @@ public class Property {
 
 	public static void setDEFAULT_SYSTEM_ICON(String dEFAULT_SYSTEM_ICON) {
 		DEFAULT_SYSTEM_ICON = dEFAULT_SYSTEM_ICON;
+	}
+
+	public static boolean getIS_VERIFY_SIGN() {
+		return IS_VERIFY_SIGN;
+	}
+
+	public static void setIS_VERIFY_SIGN(boolean iS_VERIFY_SIGN) {
+		IS_VERIFY_SIGN = iS_VERIFY_SIGN;
 	}
 }

@@ -33,7 +33,13 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
- 	
+ 	<mvc:interceptors>  
+        <mvc:interceptor>  
+            <mvc:mapping path="/api/**" />
+            <!-- <mvc:exclude-mapping path="/admin/login"/> 不拦截的url -->  
+            <bean class="com.pxjy.common.interceptor.SignInterceptor" />  
+        </mvc:interceptor>  
+    </mvc:interceptors> 
  	<bean id="openapiExceptionHandler" class="com.pxjy.common.api.exception.OpenapiExceptionHandler"/> 
  	
 	<mvc:default-servlet-handler/>

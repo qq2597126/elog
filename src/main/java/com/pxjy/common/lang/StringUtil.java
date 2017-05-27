@@ -2,6 +2,9 @@ package com.pxjy.common.lang;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class StringUtil {
 	
@@ -90,5 +93,44 @@ public class StringUtil {
 	
 	public static String[] split(String s) {
 		return s.split(SPLIT_SIGN);
+	}
+
+	/**
+	 * 字符串MD5加密
+	 * @param input
+	 * @return
+	 */
+	public static String getMD5String(String input) {
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+			byte[] inputByteArray = null;
+			try {
+				inputByteArray = input.getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			messageDigest.update(inputByteArray);
+			byte[] resultByteArray = messageDigest.digest();
+			return byteArrayToHex(resultByteArray);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * 字符数组转字符串
+	 * @param byteArray
+	 * @return
+	 */
+	public static String byteArrayToHex(byte[] byteArray) {
+		char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+		char[] resultCharArray = new char[byteArray.length * 2];
+		int index = 0;
+		for (byte b : byteArray) {
+			resultCharArray[index++] = hexDigits[b >>> 4 & 0xf];
+			resultCharArray[index++] = hexDigits[b & 0xf];
+		}
+		return new String(resultCharArray);
 	}
 }
