@@ -6,8 +6,10 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <title><%=Property.SYSTEM_NAME %></title>
 <%@ include file="/jsp/common/meta.jsp"%>
+<link rel="stylesheet" href="${base }/css/custom.css"/>
 <script>
-window.location.href = "login/login";
+alert('${message}');
+window.close();
 </script>
 </head>
 <body>

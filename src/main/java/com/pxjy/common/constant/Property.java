@@ -57,6 +57,10 @@ public class Property {
 	 */
 	public static boolean IS_VERIFY_SIGN;
 	
+	/**
+	 * 跳转UC的地址
+	 */
+	public static String PASSPORT_URL;
 	public static String getBASE() {
 		return BASE;
 	}
@@ -152,4 +156,13 @@ public class Property {
 	public static void setIS_VERIFY_SIGN(boolean iS_VERIFY_SIGN) {
 		IS_VERIFY_SIGN = iS_VERIFY_SIGN;
 	}
+
+	public static String getPASSPORT_URL() {
+		return PASSPORT_URL;
+	}
+
+	public static void setPASSPORT_URL(String pASSPORT_URL) {
+		PASSPORT_URL = pASSPORT_URL;
+	}
+	
 }

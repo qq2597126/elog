@@ -125,7 +125,14 @@ public class AppInfoApiController extends BaseController {
 			//数据解析
 			AppInfoBo appInfoBo = new AppInfoBo();
 			appInfoBo.setAppId(appId);
+			Map<String,String> hashMap = new HashMap<>();
 			AppInfoBo appinfo = appInfoService.findAppinfoByAppId(appInfoBo);
+			// app_name,app_id,send_type,send_time
+			hashMap.put("appId", appinfo.getAppId());
+			hashMap.put("app_name", appinfo.getAppName());
+			hashMap.put("send_type", appinfo.getSendType().toString());
+			hashMap.put("send_time", appinfo.getSendTime().toString());
+			
 			resultMap.put("data",appinfo);
 			status=RETURN_SUCCESS_STATUS;
 		}

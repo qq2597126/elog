@@ -39,6 +39,20 @@
 	</properties>
 	
 	<dependencies>
+		<!-- thrift -->
+		<dependency>
+			<groupId>org.apache.thrift</groupId>
+			<artifactId>libthrift</artifactId>
+			<version>0.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pxjy.thrift</groupId>
+			<artifactId>ucs-thrift</artifactId>
+			<version>ucs-thrift</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/ucs-thrift.jar</systemPath>
+		</dependency>
+		
 		<!-- log -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -198,6 +212,11 @@
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>${commons-net.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-pool2</artifactId>
+		    <version>2.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>

@@ -30,7 +30,7 @@
 			<div class="container-fluid">
 				<!-- begin mobile sidebar expand / collapse button -->
 				<div class="navbar-header">
-					<a href="${base}/login" class="navbar-brand" style="width: 300px;"><span><img src="${base }/resources/assets/images/icon.png"></span>&nbsp;&nbsp;${systemName }</a>
+					<a href="${base}/login/gotoMain" class="navbar-brand" style="width: 300px;"><span><img src="${base }/resources/assets/images/icon.png"></span>&nbsp;&nbsp;${systemName }</a>
 					<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -43,13 +43,13 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown navbar-user">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="${sessionScope.manager.logoUrl}" alt=""> 
-							<span class="hidden-xs">${sessionScope.role.name }：${sessionScope.manager.name }</span> 
+							<img src="${sessionScope.manager.logo}" alt=""> 
+							<span class="hidden-xs">${sessionScope.manager.name}</span> 
 							<!-- <b class="caret"></b> -->
 						</a>
-						<ul class="dropdown-menu animated fadeInLeft">
+						<%-- <ul class="dropdown-menu animated fadeInLeft">
 							<li><a href="${base }/logOff.${actionExt}">退出</a></li>
-						</ul> 
+						</ul>  --%>
 					</li>
 				</ul>
 				<!-- end header navigation right -->

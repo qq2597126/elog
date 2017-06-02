@@ -3,12 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd  
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx.xsd" >
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		" >
 	
 	<!-- <context:property-placeholder location="classpath*:/db.properties"/>  -->
 	<bean id="propertyConfigurer"
@@ -40,8 +43,37 @@
 		<!-- 印签的设置begin -->
 		<property name="IS_VERIFY_SIGN" value="${is.verify_sign}"/>
 		<!-- 印签的设置 end-->
-		
+		<!-- Thrift的配置 begin-->
+		<property name="PASSPORT_URL" value="${passport.url}"></property>
+		<!-- Thrift的配置 end -->
 	</bean>
+		<!-- Thrift连接池配置 -->
+	<bean id="connectionProvider" class="com.pxjy.thrift.GenericConnectionProvider">
+		<property name="serviceIP" value="${thrift.serviceIp}" />
+		<property name="servicePort" value="${thrift.servicePort}" />
+		<property name="conTimeOut" value="${thrift.conTimeOut}" />
+		<property name="maxActive" value="${thrift.maxActive}" />
+		<property name="maxIdle" value="${thrift.maxIdle}" />
+		<property name="minIdle" value="${thrift.minIdle}" />
+		<property name="maxWait" value="${thrift.maxWait}" />
+	</bean>
+	
+	<!-- Thrift连接池管理者 -->
+	<bean id="connectionManager" class="com.pxjy.thrift.ConnectionManager">
+		<property name="connectionProvider" ref="connectionProvider" />
+	</bean>
+	
+	<!-- Thrift Client 用于调用服务端Thrift服务 -->
+	<bean id="thriftClient" class="com.pxjy.thrift.client.ThriftRPCClient">
+		<property name="connectionManager" ref="connectionManager" />
+	</bean>
+	
+	<!-- ThriftService切片 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="thriftClientMethods" expression="execution(* com.pxjy.thrift.client.*.*(..))" />
+		<aop:advisor advice-ref="connectionManager" pointcut-ref="thriftClientMethods" />
+	</aop:config>
+	
 	
 	<!-- mongo的配置 -->
 	<import resource="mongo.xml"/>

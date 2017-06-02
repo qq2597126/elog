@@ -1,6 +1,5 @@
 package com.pxjy.elog.controller.action;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,18 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pxjy.common.controller.BaseController;
 import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
 import com.pxjy.elog.domain.bo.AppInfoBo;
 import com.pxjy.elog.domain.bo.EventInfoBo;
-import com.pxjy.elog.domain.bo.EventLogBo;
 import com.pxjy.elog.domain.param.AppInfoParam;
 import com.pxjy.elog.service.IAppInfoService;
 import com.pxjy.elog.service.IEventInfoService;
-import com.pxjy.elog.service.IEventLogService;
 
 /**
  * APP信息控制器

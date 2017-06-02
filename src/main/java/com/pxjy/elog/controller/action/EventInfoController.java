@@ -19,7 +19,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.pxjy.common.controller.BaseController;
 import com.pxjy.common.lang.StringUtil;
 import com.pxjy.common.paginator.IPage;
-import com.pxjy.elog.domain.bo.AppInfoBo;
 import com.pxjy.elog.domain.bo.EventInfoBo;
 import com.pxjy.elog.domain.param.EventInfoParam;
 import com.pxjy.elog.service.IEventInfoService;

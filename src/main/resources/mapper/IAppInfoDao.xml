@@ -12,11 +12,11 @@
 		select * from `app_info` 
 		<where>
 		<if test="null != param.appId and '' != param.appId">
-			`app_id` = #{param.appId}
+			`app_id` = #{param.appId} and
 		</if>
 		STATUS='1'
 		</where>
-		order by status desc,CREATE_TIME desc
+		  order by status desc,CREATE_TIME desc
 	</select>
 	<!-- 根据APPID进行获取 -->
 	<select id="findAppInfoByAppId" parameterType="appInfoBo" resultType="appInfoBo">
