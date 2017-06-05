@@ -210,7 +210,19 @@ public class AppInfoController extends BaseController {
 		
 		return "appInfo/list";
 	}
-	
+	/**
+	 * 校验APPID是否唯一
+	 */
+	@RequestMapping("checkAppId")
+	public @ResponseBody String executeAjaxCheckAppId(String appId){
+		AppInfoBo appInfoBo = new AppInfoBo();
+		appInfoBo.setAppId(appId);
+		AppInfoBo appinfo = appInfoService.findAppinfoByAppId(appInfoBo);
+		if(appinfo==null||appinfo.getAppId()==null){
+			return "0";
+		}
+		return "1";
+	}
 	/**
 	 * 删除APP信息信息
 	 * @param request
