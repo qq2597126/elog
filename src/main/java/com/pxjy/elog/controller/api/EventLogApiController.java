@@ -20,8 +20,8 @@ import com.pxjy.elog.domain.bo.EventLogBo;
 import com.pxjy.elog.service.IEventLogService;
 
 @Controller
-@RequestMapping("/admin/eventLog")
-public class EventLogController {
+@RequestMapping("/api/eventLog")
+public class EventLogApiController {
 	private static String RETURN_SUCCESS_STATUS="1";
 	private static String RETURN_DEFAULT_STATUS="0";
 	@Autowired

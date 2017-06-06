@@ -260,7 +260,10 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 		return sdf.format(new Date());
 	}
-	
+	public static String getYearMonth(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		return sdf.format(date);
+	}
 	public static String getYearMonthDay(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		return sdf.format(new Date());
@@ -275,5 +278,19 @@ public class DateUtil {
 	}
 	public static Date getNowDateTime() {
 		return new Date();
+	}
+	/**
+	 * 把yyyyMM转化为yyyy-MM
+	 */
+	public static String getToYearMonth(String data){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		Date parse=null;
+		try {
+			parse = sdf.parse(data);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		SimpleDateFormat sdfym = new SimpleDateFormat("yyyy-MM");
+		return sdfym.format(parse);
 	}
 }

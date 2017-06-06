@@ -92,6 +92,20 @@
 							<span>事件信息</span>
 						</a>
 					</li>
+					<li class="has-sub">
+						<a href="${base }/admin/eventlog/onStatistics" target="iframe-content">
+							<i class="fa fa-inbox"></i> 
+							<b class="caret pull-right"></b>
+							<span>事件日志统计</span>
+						</a>
+					</li>
+					<li class="has-sub">
+						<a href="${base }/admin/eventlog/onElogList" target="iframe-content">
+							<i class="fa fa-inbox"></i> 
+							<b class="caret pull-right"></b>
+							<span>事件日志查询</span>
+						</a>
+					</li>
 			        <!-- begin sidebar minify button -->
 					<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
 			        <!-- end sidebar minify button -->
