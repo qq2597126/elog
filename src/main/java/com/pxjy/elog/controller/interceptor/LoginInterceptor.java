@@ -25,8 +25,9 @@ public class LoginInterceptor implements HandlerInterceptor{
 			Manager manager = (Manager) ((HttpServletRequest)request).getSession().getAttribute("manager");
 			if (manager == null) {
 				response.sendRedirect(Property.PASSPORT_URL);
+				return false;
 			}
-			return false;
+			return true;
 		}
 	}
 
