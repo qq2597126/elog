@@ -26,8 +26,8 @@ public class LoginInterceptor implements HandlerInterceptor{
 			if (manager == null) {
 				response.sendRedirect(Property.PASSPORT_URL);
 			}
+			return false;
 		}
-		return true;
 	}
 
 	@Override
